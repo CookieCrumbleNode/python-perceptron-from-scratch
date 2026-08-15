@@ -95,9 +95,12 @@ for i in range(0, len(x)):
 
 print("-----------");
 
-print("Training Start")
+Learning_Rate = 0.5
+Epoch = 500
+
+print(f"Training Start - Learning Rate: {Learning_Rate}, Epoch: {Epoch} ")
 # Higher learning_rate and epoch to show clear results - This causes overfitting
-p.train(x, y, 0.5, 500)
+p.train(x, y, Learning_Rate, Epoch)
 
 print("-----------");
 
