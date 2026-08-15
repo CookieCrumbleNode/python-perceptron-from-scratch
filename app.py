@@ -9,39 +9,56 @@ class Perceptron:
         self.node_bias = []
         self.i = input_size
 
-        # Matches length of inputs
+        # We need Weights for each expected Input
         for n_w in range(0, input_size):
             self.node_weights.append((float(random.randrange(-100, 100)) / 100))
 
+        # We need a bias
         self.node_bias.append((float(random.randrange(-100, 100)) / 100))
 
     def get_nodes(self):
+        # This was for troubleshooting
         print(self.node_weights)
 
     def get_bias(self):
+        # This was for troubleshooting
         print(self.node_bias)
 
     def sigmoid(self, x):
+        # Sigmoid activation function.
         return 1 / (1 + np.exp(-x))
 
     def predict(self, input_data):
+        # This is our prediction function
+
         # Multiply each input by its weight, then add the bias
         layer = 0
         for x in range(0, len(input_data)):
             layer = layer + (input_data[x] * self.node_weights[x])
 
+        # Adding our bias
         layer = layer + self.node_bias[0]
+
+        # Returning the simoid for this single perceptron
         return self.sigmoid(layer)
 
     def train(self, xs, ys, learning_rate, epochs):
+        # Training function - We need to set the input (x), output (y), learning rate and how many times we want to loop through the training
+
         for e in range(0, epochs):
+            # Looping through the requested epochs
+
+            # Storing the weight gradients
             weight_gradients = []
+
             for w in range(0, len(self.node_weights)):
+                # Building our weight gradient array
                 weight_gradients.append(0.0)
 
             bias_gradient = 0.0
 
             for i, x in enumerate(xs):
+                # looping through the input training data and predicting the first element in the dataset
                 pred = self.predict(x)
 
                 # Derivative of Sigmoid: pred * (1 - pred)
@@ -66,20 +83,24 @@ class Perceptron:
             self.node_bias[0] = self.node_bias[0] - (learning_rate * average_bias_gradient)
 
 
-# Corrected AND gate labels: [0,0]->0, [1,1]->1, [0,1]->0, [1,0]->0
+# Gate labels: [0,0] -> 0, [1,1] -> 1, [0,1] -> 0, [1,0] -> 0
 x = [[0, 0], [1, 1], [0, 1], [1, 0]]
 y = [0, 1, 0, 0]
 
 p = Perceptron(2)
 
-print("Initial Test")
+print("Test 1 - Pre-Training")
 for i in range(0, len(x)):
     print(f" Predicting {x[i]} = {p.predict(x[i])}")
 
+print("-----------");
+
 print("Training Start")
-# Increased learning rate and epochs for clear Sigmoid convergence
+# Higher learning_rate and epoch to show clear results - This causes overfitting
 p.train(x, y, 0.5, 500)
 
-print("After Training Test")
+print("-----------");
+
+print("Test 2 - Post Training")
 for i in range(0, len(x)):
     print(f" Predicting {x[i]} = {p.predict(x[i])}")
