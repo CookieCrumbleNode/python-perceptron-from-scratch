@@ -87,6 +87,7 @@ class Perceptron:
 x = [[0, 0], [1, 1], [0, 1], [1, 0]]
 y = [0, 1, 0, 0]
 
+# Creating a Perceptron which allows a designated number of inputs
 p = Perceptron(2)
 
 print("Test 1 - Pre-Training")
